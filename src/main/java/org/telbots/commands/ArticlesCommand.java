@@ -3,17 +3,13 @@ package org.telbots.commands;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.telbots.Commands;
-import org.telbots.SymbolsAndEmojis;
 import org.telbots.bots.CovidIndiaBot;
 import org.telbots.utils.NewsParser;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -84,7 +80,6 @@ public class ArticlesCommand extends CovidIndiaBot {
                 return true;
             }
         }
-        sendDefaultMessage(update);
         return false;
     }
 }

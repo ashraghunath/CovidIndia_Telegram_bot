@@ -20,10 +20,11 @@ public class StartCommand extends CovidIndiaBot {
         sendMessage = new SendMessage();
         sendMessage.setText("Hi "+update.getMessage().getFrom().getFirstName()+"!" + SymbolsAndEmojis.HI + "\n\n" +
                 "Here are commands that you can try out:\n" +
-                SymbolsAndEmojis.HI+" /"+Commands.hi+"\n\n" +
-                SymbolsAndEmojis.GRAPH+" "+Commands.statewise+"\n\n" +
-                SymbolsAndEmojis.COMPUTER+" "+Commands.devInfo+"\n\n" +
-                SymbolsAndEmojis.ARTICLES+" "+Commands.articles
+                SymbolsAndEmojis.HI+" /"+Commands.hi+" -Help command\n\n" +
+                SymbolsAndEmojis.GRAPH+" "+Commands.statewise+" -State-wise information about Covid19-India\n\n" +
+                SymbolsAndEmojis.COMPUTER+" "+Commands.devInfo+" -Developer information\n\n" +
+                SymbolsAndEmojis.ARTICLES+" "+Commands.articles+" -Latest articles and news about Covid19-India\n\n" +
+                SymbolsAndEmojis.SUMMATION+"  "+Commands.covidindia+" -Summary of Covid19 in India\n\n"
         );
         sendMessage.setChatId(update.getMessage().getChatId());
         execute(sendMessage);

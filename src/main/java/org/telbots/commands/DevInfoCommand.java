@@ -1,11 +1,15 @@
 package org.telbots.commands;
 
+import org.telbots.CovidIndiaBotConfig;
 import org.telbots.bots.CovidIndiaBot;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import java.io.File;
+import java.io.FileInputStream;
 
 public class DevInfoCommand extends CovidIndiaBot {
 
@@ -17,20 +21,21 @@ public class DevInfoCommand extends CovidIndiaBot {
         this.update = update;
     }
 
-    public void displayDevInfo()
+
+    public void displayDevInfo() throws Exception
     {
         sendMessage = new SendMessage();
         sendMessage.setParseMode(ParseMode.HTML);
         StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("Hi There! I'm Ashwin Raghunath\nLet's connect on:\n");
-        stringBuffer.append("LinkedIn : https://www.linkedin.com/in/araghunath\n");
-        stringBuffer.append("GitHub : https://github.com/ashraghunath\n");
-        stringBuffer.append("Instagram : https://www.instagram.com/the_ashwin_r/\n");
+        stringBuffer.append(new CovidIndiaBotConfig().getPropValue("ASHWINS_INTRODUCTION"));
+        stringBuffer.append(new CovidIndiaBotConfig().getPropValue("ASHWIN_LINKEDIN"));
+        stringBuffer.append(new CovidIndiaBotConfig().getPropValue("ASHWIN_GITHUB"));
+        stringBuffer.append(new CovidIndiaBotConfig().getPropValue("ASHWIN_INSTAGRAM"));
 
         SendPhoto sendPhoto = new SendPhoto();
         sendPhoto.setChatId(update.getMessage().getChatId());
         sendPhoto.setCaption(stringBuffer.toString());
-        sendPhoto.setPhoto("https://pbs.twimg.com/profile_images/842434324427243520/QQvhXPSQ.jpg");
+        sendPhoto.setPhoto(new File("src\\main\\resources\\images\\ashwin_linkedin_image.jpeg"));
         try {
             execute(sendPhoto);
         } catch (TelegramApiException e) {

@@ -6,7 +6,8 @@ public enum SymbolsAndEmojis {
     HI(null, '\u270B'),
     GRAPH('\uD83D', '\uDCC8'),
     COMPUTER('\uD83D','\uDCBB'),
-    ARTICLES('\uD83D','\uDCCE');
+    ARTICLES('\uD83D','\uDCCE'),
+    SUMMATION(null,'\u2211');
 
     Character char1;
     Character char2;

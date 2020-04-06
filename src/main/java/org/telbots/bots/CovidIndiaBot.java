@@ -2,10 +2,7 @@ package org.telbots.bots;
 
 import org.telbots.Commands;
 import org.telbots.SymbolsAndEmojis;
-import org.telbots.commands.ArticlesCommand;
-import org.telbots.commands.DevInfoCommand;
-import org.telbots.commands.StartCommand;
-import org.telbots.commands.StateWiseCommand;
+import org.telbots.commands.*;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -20,6 +17,7 @@ public class CovidIndiaBot extends TelegramLongPollingBot {
     String command = null;
     public void onUpdateReceived(Update update) {
 
+        System.out.println("Current user : "+update.getMessage().getFrom().getFirstName()+" Command : "+update.getMessage().getText());
         command = update.getMessage().getText();
 
         try {
@@ -36,6 +34,10 @@ public class CovidIndiaBot extends TelegramLongPollingBot {
                         StateWiseCommand stateWiseCommand = new StateWiseCommand(update);
                         stateWiseCommand.displayStateWiseInfo();
                         break;
+                    case Commands.covidindia:
+                        CovidIndiaCommand covidIndiaCommand = new CovidIndiaCommand(update);
+                        covidIndiaCommand.displayCovidIndiaSummary();
+                        break;
                     case Commands.devInfo:
                         DevInfoCommand devInfoCommand = new DevInfoCommand(update);
                         devInfoCommand.displayDevInfo();
@@ -47,11 +49,11 @@ public class CovidIndiaBot extends TelegramLongPollingBot {
                         ArticlesCommand articlesCommand = new ArticlesCommand(update);
                             articlesCommand.getArticles();
                         break;
-
-
                 }
-            } else {
-                checkForArticle(update);
+            } else if(!checkForArticle(update))
+            {
+                sendDefaultMessage(update);
+
             }
         }
         catch (Exception e)
@@ -65,10 +67,12 @@ public class CovidIndiaBot extends TelegramLongPollingBot {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(update.getMessage().getChatId());
         sendMessage.setText("Sorry "+update.getMessage().getFrom().getFirstName()+", I did not under stand that. Try these options :"+"\n"+
-                SymbolsAndEmojis.HI.toString()+" /"+Commands.hi+"\n\n" +
-                SymbolsAndEmojis.GRAPH.toString()+" "+Commands.statewise+"\n\n" +
-                SymbolsAndEmojis.COMPUTER+" "+Commands.devInfo+"\n\n" +
-                SymbolsAndEmojis.ARTICLES+" "+Commands.articles);
+                        SymbolsAndEmojis.HI+" /"+Commands.hi+" -Help command\n\n" +
+                        SymbolsAndEmojis.GRAPH+" "+Commands.statewise+" -State-wise information about Covid19-India\n\n" +
+                        SymbolsAndEmojis.COMPUTER+" "+Commands.devInfo+" -Developer information\n\n" +
+                        SymbolsAndEmojis.ARTICLES+" "+Commands.articles+" -Latest articles and news about Covid19-India\n\n" +
+                        SymbolsAndEmojis.SUMMATION+"  "+Commands.covidindia+" -Summary of Covid19 in India\n\n"
+                );
 
         try {
             execute(sendMessage);
@@ -79,7 +83,13 @@ public class CovidIndiaBot extends TelegramLongPollingBot {
 
     public boolean isValid(String command)
     {
-        if(command.equalsIgnoreCase(Commands.start) || command.equalsIgnoreCase(Commands.statewise) || command.equalsIgnoreCase(Commands.devInfo) || command.equalsIgnoreCase("/"+Commands.hi) || command.equalsIgnoreCase(Commands.articles) || command.contains(Commands.backButton))
+        if(command.equalsIgnoreCase(Commands.start) ||
+                command.equalsIgnoreCase(Commands.statewise) ||
+                command.equalsIgnoreCase(Commands.devInfo) ||
+                command.equalsIgnoreCase("/"+Commands.hi) ||
+                command.equalsIgnoreCase(Commands.articles) ||
+                command.equalsIgnoreCase(Commands.covidindia) ||
+                command.contains(Commands.backButton))
             return true;
         return false;
     }
@@ -110,8 +120,8 @@ public class CovidIndiaBot extends TelegramLongPollingBot {
                         SymbolsAndEmojis.HI+" /"+Commands.hi+"\n\n" +
                         SymbolsAndEmojis.GRAPH+" "+Commands.statewise+"\n\n" +
                         SymbolsAndEmojis.COMPUTER+" "+Commands.devInfo+"\n\n" +
-                        SymbolsAndEmojis.ARTICLES+" "+Commands.articles
-        );
+                        SymbolsAndEmojis.ARTICLES+" "+Commands.articles+"\n\n" +
+                        SymbolsAndEmojis.SUMMATION+"  "+Commands.covidindia);
         sendMessage.setChatId(update.getMessage().getChatId());
         execute(sendMessage);
     }

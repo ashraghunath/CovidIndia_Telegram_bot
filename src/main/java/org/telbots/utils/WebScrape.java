@@ -47,5 +47,33 @@ public class WebScrape {
         return stateInformation;
     }
 
+    public String getCoronaindiasummary()
+    {
+        final String url = new CovidIndiaBotConfig().getPropValue("MOH_URL");
+        ArrayList<StateInformation> stateInformation = new ArrayList<StateInformation>();
+        try
+        {
+            final Document document =Jsoup.connect(url).validateTLSCertificates(false).get();
+
+            for(Element row : document.select("table.table-striped tr"))
+            {
+                if(row.select("td:nth-child(1)").text().contains("Total"))
+                {
+                    String coronaIndia = new String(row.select("td:nth-child(1)").text()+","
+                            +row.select("td:nth-child(2)").text()+","
+                            +row.select("td:nth-child(3)").text()+","+
+                            row.select("td:nth-child(4)").text());
+
+                    return coronaIndia;
+                }
+            }
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return "NOT FOUND";
+    }
+
 
 }
