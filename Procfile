@@ -1,1 +1,1 @@
-worker: java $JAVA_OPTS -cp target/classes/org.telbots.Main
+worker: sh target/bin/covIndia_bot
