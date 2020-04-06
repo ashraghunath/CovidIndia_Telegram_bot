@@ -35,7 +35,7 @@ public class DevInfoCommand extends CovidIndiaBot {
         SendPhoto sendPhoto = new SendPhoto();
         sendPhoto.setChatId(update.getMessage().getChatId());
         sendPhoto.setCaption(stringBuffer.toString());
-        sendPhoto.setPhoto(new File("src\\main\\resources\\images\\ashwin_linkedin_image.jpeg"));
+        sendPhoto.setPhoto(new File("src/main/resources/images/ashwin_linkedin_image.jpeg"));
         try {
             execute(sendPhoto);
         } catch (TelegramApiException e) {
