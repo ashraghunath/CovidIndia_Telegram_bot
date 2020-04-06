@@ -1,1 +1,1 @@
-java $JAVA_OPTS -cp target/classes:target/dependency/* org.telbots.Main
+worker: java $JAVA_OPTS -cp target/classes:target/dependency/* org.telbots.Main
